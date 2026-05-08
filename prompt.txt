@@ -5,6 +5,9 @@ Tech Stack:
 - Snowflake cli
 - Bash
 
+General Info:
+- This is a POC for getting snowflake cli doing ci/cd.  I have a free github account that I have connected to azure devops pipelines.  I also have a snowflake account.  We will need to run a pipeline that deploys to dev and prod environments.  The dev and prod are just 2 separate schemas.
+
 Rules:
 - Keep but ignore deploy.sh and deploy2.sh.  By ignore I mean not gitignore but just do not include those as files that you would edit or care about.
 - Work on exactly ONE task per iteration.
