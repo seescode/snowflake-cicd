@@ -1,0 +1,9 @@
+
+
+
+
+-Create an azure devops file that console logs.
+-Commit code and push to github and test the pipeline
+-Update the azure pipeline file so that
+    -Add in the snowflake cli so that it gets installed and run during the deploy.
+    -Assume 
