@@ -24,7 +24,7 @@ stages:
               user = "$(SNOWFLAKE_USER)"
               password = "$(SNOWFLAKE_PASSWORD)"
               TOML
-              chmod 0600 ~/.snowflake
+              chmod 600 ~/.snowflake/config.toml
             displayName: Configure Snowflake CLI
 
           - script: bash sql/deploy.sh dev
