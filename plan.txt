@@ -1,12 +1,11 @@
 GOAL: CI/CD pipeline that deploys Snowflake objects to dev and prod schemas using Snowflake CLI.
 
 == PHASE 1: LOCAL DEPLOY SCRIPT ==
-[ ] [Claude] Consolidate the multiple deploy scripts (deploy.sh, deploy2.sh, deploy3.sh) into one:
-    scripts/deploy.sh <env>  (accepts "dev" or "prod")
+[x] [Claude] Update sql/deploy.sh <env>  (accepts "dev" or "prod")
     - Sources environments/dev.env or environments/prod.env
     - Builds ~/.snowflake/config.toml from env vars (SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD)
     - Runs SQL files in order: create_users, insert_users, validate, procedures
-[ ] [Yong]   Test locally: ./scripts/deploy.sh dev
+[x] [Yong]   Test locally: ./sql/deploy.sh dev
 
 == PHASE 2: AZURE DEVOPS PIPELINE (SMOKE TEST) ==
 [ ] [Claude] Create azure-pipelines.yml at the repo root that just echoes a message
@@ -26,14 +25,14 @@ GOAL: CI/CD pipeline that deploys Snowflake objects to dev and prod schemas usin
     Stage 1 - Deploy_Dev:
       - Runs on every push to main
       - Installs Snowflake CLI (pip install snowflake-cli)
-      - Runs: scripts/deploy.sh dev
+      - Runs: sql/deploy.sh dev
       - Uses variable group snowflake-credentials
     Stage 2 - Deploy_Prod:
       - Runs only after Deploy_Dev succeeds
       - Only on main branch
       - Uses deployment job targeting the "production" environment (enables approval gate)
       - Installs Snowflake CLI
-      - Runs: scripts/deploy.sh prod
+      - Runs: sql/deploy.sh prod
 [ ] [Yong]   Push and verify full pipeline runs end-to-end in Azure DevOps logs
 
 == NOTES ==
