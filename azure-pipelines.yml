@@ -24,6 +24,7 @@ stages:
               user = "$(SNOWFLAKE_USER)"
               password = "$(SNOWFLAKE_PASSWORD)"
               TOML
+              chmod 0600 ~/.snowflake
             displayName: Configure Snowflake CLI
 
           - script: bash sql/deploy.sh dev
@@ -56,6 +57,7 @@ stages:
   #                   user = "$(SNOWFLAKE_USER)"
   #                   password = "$(SNOWFLAKE_PASSWORD)"
   #                   TOML
+  #                 chmod 0600 ~/.snowflake
   #                 displayName: Configure Snowflake CLI
 
   #               - script: bash sql/deploy.sh prod
