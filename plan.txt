@@ -8,20 +8,20 @@ GOAL: CI/CD pipeline that deploys Snowflake objects to dev and prod schemas usin
 [x] [Yong]   Test locally: ./sql/deploy.sh dev
 
 == PHASE 2: AZURE DEVOPS PIPELINE (SMOKE TEST) ==
-[ ] [Claude] Create azure-pipelines.yml at the repo root that just echoes a message
-[ ] [Yong]   Connect the GitHub repo to Azure DevOps (Pipelines > New Pipeline > GitHub)
-[ ] [Yong]   Push to main and confirm the pipeline runs and the echo appears in the log
+[x] [Claude] Create azure-pipelines.yml at the repo root that just echoes a message 
+[x] [Yong]   Connect the GitHub repo to Azure DevOps (Pipelines > New Pipeline > GitHub)
+[x] [Yong]   Push to main and confirm the pipeline runs and the echo appears in the log
 
 == PHASE 3: ADD SNOWFLAKE CREDENTIALS TO AZURE DEVOPS ==
-[ ] [Yong]   In Azure DevOps, go to Pipelines > Library > + Variable group
+[X] [Yong]   In Azure DevOps, go to Pipelines > Library > + Variable group
     - Name it: snowflake-credentials
     - Add variables: SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD (mark password as secret)
-[ ] [Yong]   In Azure DevOps, go to Pipelines > Environments > New Environment
+[X] [Yong]   In Azure DevOps, go to Pipelines > Environments > New Environment
     - Create an environment named: production
     - Optionally add a manual approval gate for prod deploys
 
 == PHASE 4: FULL CI/CD PIPELINE ==
-[ ] [Claude] Update azure-pipelines.yml with two stages:
+[x] [Claude] Update azure-pipelines.yml with two stages:
     Stage 1 - Deploy_Dev:
       - Runs on every push to main
       - Installs Snowflake CLI (pip install snowflake-cli)
