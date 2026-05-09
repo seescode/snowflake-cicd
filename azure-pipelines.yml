@@ -4,6 +4,59 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-  - script: echo "Azure DevOps pipeline is connected and running."
-    displayName: Smoke test
+stages:
+  - stage: Deploy_Dev
+    displayName: Deploy to Dev
+    variables:
+      - group: snowflake-credentials
+    jobs:
+      - job: deploy_dev
+        displayName: Deploy to Dev
+        steps:
+          - script: pip install snowflake-cli
+            displayName: Install Snowflake CLI
+
+          - script: |
+              mkdir -p ~/.snowflake
+              cat > ~/.snowflake/config.toml <<'TOML'
+              [connections.default]
+              account = "$(SNOWFLAKE_ACCOUNT)"
+              user = "$(SNOWFLAKE_USER)"
+              password = "$(SNOWFLAKE_PASSWORD)"
+              TOML
+            displayName: Configure Snowflake CLI
+
+          - script: bash sql/deploy.sh dev
+            displayName: Deploy to Dev schema
+
+  - stage: Deploy_Prod
+    displayName: Deploy to Prod
+    dependsOn: Deploy_Dev
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    variables:
+      - group: snowflake-credentials
+    jobs:
+      - deployment: deploy_prod
+        displayName: Deploy to Prod
+        environment: production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - script: pip install snowflake-cli
+                  displayName: Install Snowflake CLI
+
+                - script: |
+                    mkdir -p ~/.snowflake
+                    cat > ~/.snowflake/config.toml <<'TOML'
+                    [connections.default]
+                    account = "$(SNOWFLAKE_ACCOUNT)"
+                    user = "$(SNOWFLAKE_USER)"
+                    password = "$(SNOWFLAKE_PASSWORD)"
+                    TOML
+                  displayName: Configure Snowflake CLI
+
+                - script: bash sql/deploy.sh prod
+                  displayName: Deploy to Prod schema
