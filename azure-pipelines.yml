@@ -5,6 +5,32 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+  - stage: pr
+    displayName: Deploy to Dev
+    variables:
+      - group: snowflake-credentials
+    jobs:
+      - job: pr
+        displayName: Run smoke tests on Pull Request
+        steps:
+          - script: pip install snowflake-cli
+            displayName: Install Snowflake CLI
+
+          - script: |
+              mkdir -p ~/.snowflake
+              cat > ~/.snowflake/config.toml <<'TOML'
+              [connections.default]
+              account = "$(SNOWFLAKE_ACCOUNT)"
+              user = "$(SNOWFLAKE_USER)"
+              password = "$(SNOWFLAKE_PASSWORD)"
+              TOML
+              chmod 600 ~/.snowflake/config.toml
+            displayName: Configure Snowflake CLI
+
+          - script: bash scripts/deploy.sh dev
+            displayName: Deploy to Dev schema
+
+
   - stage: Deploy_Dev
     displayName: Deploy to Dev
     variables:
