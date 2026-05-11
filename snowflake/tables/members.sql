@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE members (
+CREATE TABLE IF NOT EXISTS TABLE members (
     member_id       VARCHAR(36)     NOT NULL,
     first_name      VARCHAR(100)    NOT NULL,
     last_name       VARCHAR(100)    NOT NULL,
@@ -10,3 +10,5 @@ CREATE OR REPLACE TABLE members (
     CONSTRAINT pk_members PRIMARY KEY (member_id),
     CONSTRAINT chk_members_plan_type CHECK (plan_type IN ('HMO', 'PPO', 'EPO'))
 );
+
+ALTER TABLE members ADD COLUMN IF NOT EXISTS notes STRING;
