@@ -30,6 +30,39 @@ stages:
           - script: bash scripts/deploy.sh dev
             displayName: Deploy to Dev schema
 
+  - stage: Deploy_Test
+    displayName: Deploy to Test    
+    dependsOn: Deploy_Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    variables:
+      - group: snowflake-credentials
+    jobs:
+      - deployment: deploy_test
+        displayName: Deploy to Test
+        environment: test
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - script: pip install snowflake-cli
+                  displayName: Install Snowflake CLI
+
+                - script: |
+                    mkdir -p ~/.snowflake
+                    cat > ~/.snowflake/config.toml <<'TOML'
+                    [connections.default]
+                    account = "$(SNOWFLAKE_ACCOUNT)"
+                    user = "$(SNOWFLAKE_USER)"
+                    password = "$(SNOWFLAKE_PASSWORD)"
+                    TOML
+                    chmod 600 ~/.snowflake/config.toml
+                  displayName: Configure Snowflake CLI
+
+                - script: bash scripts/deploy.sh test
+                  displayName: Deploy to Test schema
+
   - stage: Deploy_Prod
     displayName: Deploy to Prod
     dependsOn: Deploy_Dev

@@ -1,12 +1,12 @@
 #!/bin/bash
-# Deploys deploy.sql to Snowflake for the given environment (dev or prod).
-# Usage: ./deploy.sh <dev|prod>
+# Deploys deploy.sql to Snowflake for the given environment (dev, test, or prod).
+# Usage: ./deploy.sh <dev|test|prod>
 set -e
 
 # Require exactly one argument: the target environment
 ENV=${1:-}
-if [[ "$ENV" != "dev" && "$ENV" != "prod" ]]; then
-  echo "Usage: $0 <dev|prod>" >&2
+if [[ "$ENV" != "dev" && "$ENV" != "test" && "$ENV" != "prod" ]]; then
+  echo "Usage: $0 <dev|test|prod>" >&2
   exit 1
 fi
 
