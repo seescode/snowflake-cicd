@@ -71,7 +71,9 @@ stages:
   - stage: Deploy_Test
     displayName: Deploy to Test    
     dependsOn: Deploy_Dev
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    condition: and(
+      in(dependencies.Deploy_Dev.result, 'Succeeded'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     variables:
       - group: snowflake-credentials
     jobs:
@@ -104,7 +106,9 @@ stages:
   - stage: Deploy_Prod
     displayName: Deploy to Prod
     dependsOn: Deploy_Test
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    condition: and(
+      in(dependencies.Deploy_Test.result, 'Succeeded'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     variables:
       - group: snowflake-credentials
     jobs:
