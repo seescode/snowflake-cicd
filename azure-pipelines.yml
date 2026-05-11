@@ -41,7 +41,10 @@ stages:
 
   - stage: Deploy_Dev
     displayName: Deploy to Dev
-    condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
+    dependsOn: pr
+    condition: and(
+      in(dependencies.pr.result, 'Succeeded', 'Skipped'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     variables:
       - group: snowflake-credentials
     jobs:
