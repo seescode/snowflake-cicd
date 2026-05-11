@@ -1,10 +1,10 @@
 -- Set context
-USE WAREHOUSE COMPUTE_WH;
+USE WAREHOUSE <%wh%>;
 
-!source sql/create_users.sql
-!source sql/insert_users.sql
-!source sql/validate.sql
+!source tables/members.sql
+!source tables/providers.sql
+!source tables/claims.sql
 
--- Procedures
-!source procedures/load_customers.sql
-!source procedures/transform_orders.sql
+!source views/vw_claims_summary.sql
+
+!source stored_procedures/process_claim.sql
