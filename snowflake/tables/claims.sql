@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE claims (
+CREATE TABLE IF NOT EXISTS claims (
     claim_id        VARCHAR(36)     NOT NULL,
     member_id       VARCHAR(36)     NOT NULL,
     provider_id     VARCHAR(36)     NOT NULL,
@@ -17,3 +17,5 @@ CREATE OR REPLACE TABLE claims (
     CONSTRAINT chk_claims_status CHECK (status IN ('PENDING', 'APPROVED', 'DENIED', 'PAID')),
     CONSTRAINT chk_claims_amount_billed CHECK (amount_billed > 0)
 );
+
+ALTER TABLE claims ADD COLUMN IF NOT EXISTS notes STRING;
