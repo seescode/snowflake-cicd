@@ -17,6 +17,6 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 # Load env-specific vars: SF_DATABASE, SF_SCHEMA, SF_WAREHOUSE
 source "$REPO_ROOT/environments/$ENV.env"
 
-# Run from SCRIPT_DIR so the -f path resolves correctly
-cd "$SCRIPT_DIR"
+# Run from the snowflake/ directory so !source paths in deploy.sql resolve correctly
+cd "$SCRIPT_DIR/../snowflake"
 snow sql -f deploy.sql -D db="$SF_DATABASE" -D schema="$SF_SCHEMA"
