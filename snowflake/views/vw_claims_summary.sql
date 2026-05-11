@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW <%db%>.<%schema%>.vw_claims_summary AS
+CREATE OR REPLACE VIEW vw_claims_summary AS
 SELECT
     c.claim_id,
     c.service_date,
@@ -19,6 +19,6 @@ SELECT
     p.last_name                         AS provider_last_name,
     p.specialty,
     p.network_status
-FROM <%db%>.<%schema%>.claims c
-JOIN <%db%>.<%schema%>.members  m ON c.member_id   = m.member_id
-JOIN <%db%>.<%schema%>.providers p ON c.provider_id = p.provider_id;
+FROM claims c
+JOIN members  m ON c.member_id   = m.member_id
+JOIN providers p ON c.provider_id = p.provider_id;
