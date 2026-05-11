@@ -27,7 +27,7 @@ stages:
               chmod 600 ~/.snowflake/config.toml
             displayName: Configure Snowflake CLI
 
-          - script: bash sql/deploy.sh dev
+          - script: bash scripts/deploy.sh dev
             displayName: Deploy to Dev schema
 
   - stage: Deploy_Prod
@@ -60,5 +60,5 @@ stages:
                     chmod 600 ~/.snowflake/config.toml
                   displayName: Configure Snowflake CLI
 
-                - script: bash sql/deploy.sh prod
+                - script: bash scripts/deploy.sh prod
                   displayName: Deploy to Prod schema
