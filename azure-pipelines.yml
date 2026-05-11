@@ -1,5 +1,12 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: ubuntu-latest
@@ -7,6 +14,7 @@ pool:
 stages:
   - stage: pr
     displayName: Deploy to Dev
+    condition: "eq(variables['Build.Reason'], 'PullRequest')"
     variables:
       - group: snowflake-credentials
     jobs:
@@ -27,12 +35,13 @@ stages:
               chmod 600 ~/.snowflake/config.toml
             displayName: Configure Snowflake CLI
 
-          - script: bash scripts/deploy.sh dev
-            displayName: Deploy to Dev schema
+          - script: bash scripts/smoke_test.sh dev
+            displayName: Run Smoke Tests on Dev
 
 
   - stage: Deploy_Dev
     displayName: Deploy to Dev
+    condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
     variables:
       - group: snowflake-credentials
     jobs:
