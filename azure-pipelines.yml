@@ -32,7 +32,7 @@ stages:
 
   - stage: Deploy_Test
     displayName: Deploy to Test    
-    dependsOn: Deploy_Test
+    dependsOn: Deploy_Dev
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     variables:
       - group: snowflake-credentials
