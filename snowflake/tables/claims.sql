@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE <%db%>.<%schema%>.claims (
+CREATE OR REPLACE TABLE claims (
     claim_id        VARCHAR(36)     NOT NULL,
     member_id       VARCHAR(36)     NOT NULL,
     provider_id     VARCHAR(36)     NOT NULL,
@@ -12,8 +12,8 @@ CREATE OR REPLACE TABLE <%db%>.<%schema%>.claims (
     created_at      TIMESTAMP_NTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     updated_at      TIMESTAMP_NTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT pk_claims PRIMARY KEY (claim_id),
-    CONSTRAINT fk_claims_member FOREIGN KEY (member_id) REFERENCES <%db%>.<%schema%>.members (member_id),
-    CONSTRAINT fk_claims_provider FOREIGN KEY (provider_id) REFERENCES <%db%>.<%schema%>.providers (provider_id),
+    CONSTRAINT fk_claims_member FOREIGN KEY (member_id) REFERENCES members (member_id),
+    CONSTRAINT fk_claims_provider FOREIGN KEY (provider_id) REFERENCES providers (provider_id),
     CONSTRAINT chk_claims_status CHECK (status IN ('PENDING', 'APPROVED', 'DENIED', 'PAID')),
     CONSTRAINT chk_claims_amount_billed CHECK (amount_billed > 0)
 );

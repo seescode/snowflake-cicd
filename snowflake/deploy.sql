@@ -1,4 +1,6 @@
 -- Set context
+USE DATABASE <%db%>;
+USE SCHEMA <%schema%>;
 USE WAREHOUSE <%wh%>;
 
 !source tables/members.sql
