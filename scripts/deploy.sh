@@ -19,4 +19,6 @@ source "$REPO_ROOT/environments/$ENV.env"
 
 # Run from the snowflake/ directory so !source paths in deploy.sql resolve correctly
 cd "$SCRIPT_DIR/../snowflake"
+echo "$SCRIPT_DIR/../snowflake"
+echo "$SF_DATABASE"
 snow sql -f deploy.sql -D db="$SF_DATABASE" -D schema="$SF_SCHEMA"
