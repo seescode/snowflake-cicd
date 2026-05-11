@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS TABLE providers (
+CREATE TABLE IF NOT EXISTS providers (
     provider_id     VARCHAR(36)     NOT NULL,
     first_name      VARCHAR(100)    NOT NULL,
     last_name       VARCHAR(100)    NOT NULL,
